@@ -9,25 +9,26 @@ users = []
 levels = []
 
 
-with open('./data/wp_ula_course.csv', 'r', encoding='utf8') as file:
+with open('./data/wp_ula_course.csv', 'r') as file:
     courses = file.readlines()
 
-with open('./data/wp_ula_courselevel.csv', 'r', encoding='utf8') as file:
+# with open('./data/wp_ula_courselevel.csv', 'r', encoding='utf8') as file:
+with open('./data/wp_ula_courselevel.csv', 'r') as file:
     course_lvl = file.readlines()
 
-with open('./data/wp_ula_member.csv', 'r', encoding='utf8') as file:
+with open('./data/wp_ula_member.csv', 'r') as file:
     members = file.readlines()
 
-with open('./data/wp_ula_membercourselevel.csv', 'r', encoding='utf8') as file:
+with open('./data/wp_ula_membercourselevel.csv', 'r') as file:
     member_course_level = file.readlines()
 
-with open('./data/wp_ula_personcontactinfo.csv', 'r', encoding='utf8') as file:
+with open('./data/wp_ula_personcontactinfo.csv', 'r') as file:
     person_contact_info = file.readlines()
 
-with open('./data/wp_users.csv', 'r', encoding='utf8') as file:
+with open('./data/wp_users.csv', 'r') as file:
     users= file.readlines()
 
-with open('./data/wp_ula_level.csv', 'r', encoding='utf8') as file:
+with open('./data/wp_ula_level.csv', 'r') as file:
     levels = file.readlines()
 
 courses_dict = []
@@ -130,6 +131,15 @@ def getEmail(id):
 
     return user.get('user_email')
 
+
+def reformatDate(date):
+    if date != 'NULL':
+        dateparts = date.split('-')
+        return '{}-{}-{}'.format(dateparts[2], dateparts[1], dateparts[0])
+    else:
+        return 'NULL'
+
+
 # header = '"Voornaam";"Achternaam";"Email";"Geboortedatum";"Geslacht";"Postcode";"Stad";"Straatnaam";"Huisnummer + toevoeging";"Telefoon";"Cursussen";bankBIC";"Start lidmaatschap";"Einde lidmaatschap";"Is student";"Instituut";"Collegekaart nummer";"Is erelid"\n'
 header = '"Aanhef";"Voornaam";"Achternaam";"Geboortedatum";"Postcode";"Straatnaam";"Huisnr";"Huisnr toev.";"Plaatsnaam";"Telefoonnummer";"E-mailadres";"Bankrekeningnummer";"BIC nummer";"Salsa";"Stijldansen";"Dansend";"Student";"Erelid";"Opmerkingen";"Nieuwsbrief";"Smoelenboek";"Akkoord privacyverklaring";"Start lidmaatschap";"Eind Lidmaatschap"\n'
 csv_string = ''
@@ -157,7 +167,7 @@ for member in members_dict:
                                                                                                        aanhef,
                                                                                                        member.get('firstName'),
                                                                                                        member.get('lastName'),
-                                                                                                       member.get('dateOfBirth'),
+                                                                                                       reformatDate(member.get('dateOfBirth')),
                                                                                                        contact_info,
                                                                                                        email,
                                                                                                        member.get('bankAccountNumber'),
@@ -171,12 +181,12 @@ for member in members_dict:
                                                                                                        'Ja',
                                                                                                        'Ja',
                                                                                                        'Ja',
-                                                                                                       member.get('dateMemberStart'),
-                                                                                                       member.get('dateMemberEnd'))
+                                                                                                       reformatDate(member.get('dateMemberStart')),
+                                                                                                       reformatDate(member.get('dateMemberEnd')))
 
 
 
 # print(csv_string)
 csv_string = header + csv_string
-with open('./data/members_may.csv', 'w+', encoding='utf8') as file:
+with open('./data/members_may_nonutf.csv', 'w+', encoding='utf8') as file:
     file.write(csv_string)
