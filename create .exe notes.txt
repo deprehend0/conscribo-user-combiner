@@ -1,0 +1,1 @@
+command to run: pyinstaller --onefile --additional-hooks-dir./combiner gui.py

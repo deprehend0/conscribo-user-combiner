@@ -1,3 +1,7 @@
 .idea/
 data/
 conscribo_user_combiner/__ pycache__/
+conscribo_user_combiner/combiner/__ pycache__/
+__pycache__/
+build/
+*.spec
