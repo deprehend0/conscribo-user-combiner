@@ -81,9 +81,6 @@ l_export.pack()
 t_export.pack()
 e_export.pack()
 
-B = Button(window, text="abc", command=helloCallBack)
-B.pack()
-
 combine_button = Button(window, text="Combine", command=combine)
 combine_button.pack()
 
